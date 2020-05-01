@@ -1,26 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import s from './App.module.css';
+import sizeMe from "react-sizeme";
+import Pagination from './Pagination';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+let App = (props: any) => {
+    // using sizeMe for taking current width of component
+    let width: number = props.size.width;
+    return (
+        <div>
+            <div className={s.container}>
+                <div className={s.container__row}>
+                    <Pagination width={width}/>
+                </div>
+            </div>
+            {/*<button className={s.button} onClick={() => setRegenerate(regenerate + 1)}>Сlick to regenerate</button>*/}
+        </div>
+    );
 }
 
-export default App;
+export default sizeMe()(App);
