@@ -6,7 +6,6 @@ import Pagination from './Pagination';
 
 
 let App = (props: any) => {
-
     // using sizeMe for taking current width of component
     let width: number = props.size.width;
     return (

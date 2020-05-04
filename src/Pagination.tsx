@@ -3,9 +3,12 @@ import {observer} from "mobx-react";
 import store from './store';
 import s from './App.module.css';
 
+type Props = {
+    width: number
+}
 
 @observer
-class Pagination extends React.Component<any, any> {
+class Pagination extends React.Component<Props, Props> {
     // set initial random array and current width
     componentDidMount(): void {
         let array: Array<number> = [];
@@ -18,41 +21,43 @@ class Pagination extends React.Component<any, any> {
     }
 
     // update current width of component
-    componentWillUpdate() {
+    componentDidUpdate() {
         store.setWidthOfComponent(this.props.width)
     }
 
     render(): React.ReactNode {
-        // change page clicking on tick
         let tickClick = (direction: string) => {
-            if (direction === 'left') {
-                if (store.state.currentPage - 1 >= 0) {
-                    store.changeCurrentPage(store.state.currentPage - 1)
+            if(direction==='right'){
+                if(store.state.initialArrayOfElements.length>store.state.currentPosition+1){
+                    store.changeCurrentPosition(store.state.currentPosition+1)
                 } else {
-                    store.changeCurrentPage(store.state.initialArrayOfElements.length - 1)
+                    store.changeCurrentPosition(0)
                 }
             } else {
-                if (store.state.currentPage + 1 < store.state.initialArrayOfElements.length) {
-                    store.changeCurrentPage(store.state.currentPage + 1)
+                if(0<=store.state.currentPosition-1){
+                    store.changeCurrentPosition(store.state.currentPosition-1)
                 } else {
-                    store.changeCurrentPage(0)
+                    store.changeCurrentPosition(store.state.initialArrayOfElements.length-1)
                 }
             }
         }
+
+
+        let itemClick = (page: number) => {
+            store.changeCurrentPosition(page)
+        }
+
         return (
             <>
-                <span onClick={() => tickClick('left')}>&#129092;</span>
-                {(store.renderArrOfElements.length > 1) ? store.renderArrOfElements.map(a => {
+                <span onClick={() => tickClick('left')} className={s.tick__left}/>
+                {(store.renderArrOfElements.length > 1) ? store.renderArrOfElements.map((a) => {
                     return <div key={a.id}
-                                className={store.state.currentPage === a.id ? s.active : s.container__row_element}
-                                style={{width: `${a.elementWidth}px`}} onClick={() => {
-                        store.changeCurrentPage(a.id)
-                    }
-                    }>
+                                className={store.state.currentPosition === a.id ? s.active : s.container__row_element}
+                                style={{width: `${a.elementWidth}px`}} onClick={()=>itemClick(a.id)}>
                         {a.elementWidth}px
                     </div>
                 }) : ''}
-                <span onClick={() => tickClick('right')}>&#129094;</span>
+                <span onClick={() => tickClick('right')} className={s.tick__right}/>
             </>
         )
     }

@@ -24,6 +24,7 @@ body{
 
 
 .container__row_element{
+    cursor: pointer;
     position: relative;
     display: inline-block;
     font-size: 90%;
@@ -65,6 +66,29 @@ body{
     transition: .2s ease-in-out;
 }
 
+.tick__left{
+    cursor: pointer;
+    background: url('./asset/arrow-alt-circle-left-solid.svg') 0 50% no-repeat;
+    width: 30px;
+    transition: .2s ease-in-out;
+
+}
+
+.tick__right{
+    cursor: pointer;
+    background: url('./asset/arrow-alt-circle-right-solid.svg') 100% 50% no-repeat;
+    width: 30px;
+    transition: .2s ease-in-out;
+}
+
+.tick__right:hover {
+    border-radius: 100%;
+    background: #00b38f url('./asset/arrow-alt-circle-right-solid.svg') 100% 50% no-repeat;
+}
+.tick__left:hover {
+    border-radius: 100%;
+    background: #00b38f url('./asset/arrow-alt-circle-left-solid.svg') 100% 50% no-repeat;
+}
 
 @media (max-width: 768px) {
     .container{
